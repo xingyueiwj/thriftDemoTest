@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--这样的话才可以在其他标签里面使用th:*这样的语法.这是下面语法的前提.-->
+<head>
+    <title>hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <!--/*@thymesVar id="name" type="java.lang.String"*/-->
+    <!--获取变量值用$符号,对于javaBean的话使用变量名.属性名方式获取,这点和EL表达式一样-->
+    <p th:text="'Hello！, ' + ${name} + '!'" ></p>
+
+    <!--当然这种形式限制比较多，|…|中只能包含变量表达式${…}，不能包含其他常量、条件表达式等-->
+    <span th:text="|Welcome to our application, ${name} test|"></span>
+
+    <!--唯一需要注意的是使用<,>时需要用它的HTML转义符-->
+    <p th:if="2 &gt; 1">二大于一,条件成立的时候才显示这个标签!</p>
+
+    <!--th:unless于th:if恰好相反，只有表达式中的条件不成立，才会显示其内容-->
+    <!--<a th:href="@{/login}" th:unless=${session.user != null}>Login</a>-->
+
+    <!--三目运算-->
+    <p th:text="'Execution mode is ' + ( (${name} == 'dev')? 'Development' : 'Production')"></p>
+
+    <!--Thymeleaf同样支持多路选择Switch结构,默认属性default可以用*表示-->
+    <!--<div th:switch="${user.role}">
+        <p th:case="'admin'">User is an administrator</p>
+        <p th:case="#{roles.manager}">User is a manager</p>
+    </div>-->
+
+    <table>
+        <tr>
+            <th>NAME111</th>
+            <th>PRICE222</th>
+            <th>IN STOCK</th>
+        </tr>
+        <tr th:each="prod : ${prods}">
+            <td th:text="${prod.name}">Onions</td>
+            <td th:text="${prod.price}">2.41</td>
+            <td th:text="${#dates.createToday()}"></td>
+            <!--<td th:text="${prod.inStock}? #{true} : #{false}">yes</td>-->
+        </tr>
+    </table>
+
+    <!--/*
+    * Check whether a String is empty (or null). Performs a trim() operation before check
+    * Also works with arrays, lists or sets
+    */
+    ${#strings.isEmpty(name)}
+    ${#strings.arrayIsEmpty(nameArr)}
+    ${#strings.listIsEmpty(nameList)}
+    ${#strings.setIsEmpty(nameSet)}
+
+    /*
+    * Check whether a String starts or ends with a fragment
+    * Also works with arrays, lists or sets
+    */
+    ${#strings.startsWith(name,'Don')}                  // also array*, list* and set*
+    ${#strings.endsWith(name,endingFragment)}           // also array*, list* and set*
+
+    /*
+    * Compute length
+    * Also works with arrays, lists or sets
+    */
+    ${#strings.length(str)}
+
+    /*
+    * Null-safe comparison and concatenation
+    */
+    ${#strings.equals(str)}
+    ${#strings.equalsIgnoreCase(str)}
+    ${#strings.concat(str)}
+    ${#strings.concatReplaceNulls(str)}
+
+    /*
+    * Random
+    */
+    ${#strings.randomAlphanumeric(count)}-->
+</body>
+
+</html>
