@@ -1,0 +1,2 @@
+# thriftDemoTest
+- springboot + thrift + thymeleaf
